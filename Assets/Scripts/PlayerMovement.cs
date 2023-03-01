@@ -1,11 +1,16 @@
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IMove
 {
     [SerializeField] private PlayerInput _playerInput;
     [SerializeField] private float _speed = 1f;
 
-    public Vector2 MoveVector { get; private set; }
+    public Vector2 MoveVector { get; set; }
+
+    public void Move()
+    {
+        this.transform.Translate(MoveVector * Time.deltaTime * _speed);
+    }
 
     private void Awake()
     {
@@ -29,6 +34,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        this.transform.Translate(MoveVector * Time.deltaTime * _speed);
+        Move();
     }
 }
