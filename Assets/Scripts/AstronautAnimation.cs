@@ -1,37 +1,38 @@
 using UnityEngine;
 
-public class PlayerAnimation : MonoBehaviour
+public class AstronautAnimation : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
-    [SerializeField] SpriteRenderer _spriteRenderer;
-    [SerializeField] PlayerMovement _playerMovement;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private VelocityMovement velocityMovement;
 
     private int walk_up, walk_down, walk_side;
     private void SetAnimation()
     {
-        switch (_playerMovement.MoveVector)
+        //Debug.Log(Vector2Int.RoundToInt(velocityMovement.MoveVector));
+        switch (Vector2Int.RoundToInt(velocityMovement.MoveVector))
         {
-            case Vector2 v when v.Equals(Vector2.up):
+            case Vector2Int v when v == Vector2Int.up || v == new Vector2Int(-1, 1):
                 _spriteRenderer.flipX = false;
                 _animator.CrossFade(walk_up, 0f);
                 break;
 
-            case Vector2 v when v.Equals(Vector2.down):
+            case Vector2Int v when v == Vector2Int.down || v == new Vector2Int(1, -1):
                 _spriteRenderer.flipX = false;
                 _animator.CrossFade(walk_down, 0f);
                 break;
 
-            case Vector2 v when v.Equals(Vector2.left):
+            case Vector2Int v when v == Vector2Int.left || v == new Vector2Int(-1, -1):
                 _spriteRenderer.flipX = false;
                 _animator.CrossFade(walk_side, 0f);
                 break;
 
-            case Vector2 v when v.Equals(Vector2.right):
+            case Vector2Int v when v == Vector2Int.right || v == new Vector2Int(1, 1):
                 _spriteRenderer.flipX = true;
                 _animator.CrossFade(walk_side, 0f);
                 break;
 
-            case Vector2 v when v.Equals(Vector2.zero):
+            case Vector2Int v when v == Vector2Int.zero:
                 _animator.SetTrigger("Stop");
                 break;
         }
@@ -44,12 +45,12 @@ public class PlayerAnimation : MonoBehaviour
         walk_side = Animator.StringToHash("walk_side");
     }
 
-    void Awake()
+    private void Awake()
     {
         SerializeAnimationStrings();
     }
 
-    void Update()
+    private void Update()
     {
         SetAnimation();
     }

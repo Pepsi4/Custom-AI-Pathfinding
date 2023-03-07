@@ -11,11 +11,9 @@ public class PathFinding
     private List<PathNode> openList;
     private HashSet<PathNode> closedList;
 
-    public PathFinding(int width, int height, Vector3 spawnPos, Transform parent)
+    public PathFinding(int width, int height, Vector3 spawnPos, Transform parent, float cellCize = 1f)
     {
-        grid = new Grid<PathNode>(width, height, 1f, spawnPos, (Grid<PathNode> g, int x, int y) => new PathNode(g, x, y), parent);
-
-
+        grid = new Grid<PathNode>(width, height, cellCize, spawnPos, (Grid<PathNode> g, int x, int y) => new PathNode(g, x, y), parent);
     }
 
     public Grid<PathNode> Grid => grid;
@@ -38,6 +36,9 @@ public class PathFinding
                 pathNode.cameFromNode = null;
             }
         }
+
+        if (startNode == null || endNode == null)
+            return null;
 
         startNode.gCost = 0;
         startNode.hCost = CalculateDistanceCost(startNode, endNode);
@@ -82,13 +83,6 @@ public class PathFinding
         // out of nodes on the open list
         return null;
     }
-
-    //public void SetOpenListDebugTextColor(Color color)
-    //{
-    //    SetListTextColor(color, grid.DebugTextArray, openList);
-    //}
-
-
 
     public PathNode GetNode(int x, int y)
     {
