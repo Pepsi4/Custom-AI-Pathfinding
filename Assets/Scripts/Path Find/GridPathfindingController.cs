@@ -20,6 +20,8 @@ public class GridPathfindingController : MonoBehaviour
     void Awake()
     {
         _pathFinding = new PathFinding(10, 10, new Vector2(-5, -5), this.transform, 1f);
+
+        _path = new List<PathNode>();
     }
 
     private void CreatePath(Vector3 endPos)
@@ -80,11 +82,11 @@ public class GridPathfindingController : MonoBehaviour
 
             if (isWalkable)
             {
-                _pathFinding.Grid.SetDebugTextColor(NoPathColor, x, y);
-                try { _nodeToRemove = _path.FirstOrDefault(node => node.Equals(_pathFinding.GetNode(x, y))); }
-                catch (System.ArgumentNullException) { }
-
                // _meshFactory.CreateSquare(_pathFinding.Grid.GetWorldPosition(x, y) + Vector3.back, new Vector3(_pathFinding.Grid.CellSize, _pathFinding.Grid.CellSize));
+                _pathFinding.Grid.SetDebugTextColor(NoPathColor, x, y);
+
+                if (_pathFinding.GetNode(x, y) != null)
+                    _nodeToRemove = _path.FirstOrDefault(node => node.Equals(_pathFinding.GetNode(x, y)));
 
                 if (_nodeToRemove != null)
                 {

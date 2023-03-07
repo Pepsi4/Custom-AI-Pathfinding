@@ -29,10 +29,11 @@ public class ChasePathGridMovement : VelocityMovement
 
         if (_path != null)
         {
-            for (int i = 1; i < _path.Count; i++)
+            for (int i = 0; i < _path.Count; i++)
             {
-                MovementList.Add(new Vector3(_path[i].x * _pathFinding.Grid.CellSize + _pathFinding.Grid.OriginPosition.x + _pathFinding.Grid.CellSize * .5f,
-                        _path[i].y * _pathFinding.Grid.CellSize + _pathFinding.Grid.OriginPosition.y + _pathFinding.Grid.CellSize * .5f));
+                if (_pathFinding.Grid.GetGridObject(this.transform.position) != _path[i])
+                    MovementList.Add(new Vector3(_path[i].x * _pathFinding.Grid.CellSize + _pathFinding.Grid.OriginPosition.x + _pathFinding.Grid.CellSize * .5f,
+                            _path[i].y * _pathFinding.Grid.CellSize + _pathFinding.Grid.OriginPosition.y + _pathFinding.Grid.CellSize * .5f));
             }
         }
         yield return new WaitForSeconds(_updatePathDelaySecond);
