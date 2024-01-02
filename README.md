@@ -1,7 +1,7 @@
-# Simple AI Sample with pathfinding system.
+# Simple AI Sample with pathfinding system. Unity3D.
 
 ###     0. I have implemented a generic grid and pathfinding system for this project.
-###### (Path nodes that are not used for the final path result have been checked with a red color)
+###### (Red nodes are obstacles)
 
 ![path](https://user-images.githubusercontent.com/10260469/222777101-90c21eac-a036-47f8-972e-9179383d9e8e.gif)
 
